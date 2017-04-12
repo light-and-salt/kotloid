@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="close">닫기</string>
+    <string name="open">열기</string>
+    <string name="title_chooser">Choose a File</string>
+</resources>
