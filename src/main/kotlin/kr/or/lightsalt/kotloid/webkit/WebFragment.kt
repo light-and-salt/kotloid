@@ -2,16 +2,14 @@
 
 package kr.or.lightsalt.kotloid.webkit
 
-import android.content.Intent
-import android.os.Bundle
+import android.content.*
+import android.os.*
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.webkit.CookieSyncManager
 import android.widget.ProgressBar
 import im.delight.android.webview.AdvancedWebView
-import kr.or.lightsalt.kotloid.R
-import kr.or.lightsalt.kotloid.lazyViewById
+import kr.or.lightsalt.kotloid.*
 
 open class WebFragment : Fragment(), WebClient {
 	override val progressBar: ProgressBar by lazyViewById(android.R.id.progress)
@@ -25,8 +23,28 @@ open class WebFragment : Fragment(), WebClient {
 		webView.onActivityResult(requestCode, resultCode, data)
 	}
 
+	override fun onAttach(context: Context?) {
+		super.onAttach(context)
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			CookieSyncManager.createInstance(context)
+		}
+	}
+
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
 			savedInstanceState: Bundle?) = inflater.inflate(R.layout.web, container, false)!!
+
+	override fun onPause() {
+		super.onPause()
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			CookieSyncManager.getInstance().stopSync()
+		}
+	}
+	override fun onResume() {
+		super.onResume()
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+			CookieSyncManager.getInstance().startSync()
+		}
+	}
 
 	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) = init()
 

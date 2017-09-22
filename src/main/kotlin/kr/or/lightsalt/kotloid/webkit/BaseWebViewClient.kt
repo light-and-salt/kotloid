@@ -7,9 +7,7 @@ import android.net.Uri
 import android.net.UrlQuerySanitizer
 import android.os.Build
 import android.provider.Browser
-import android.webkit.CookieSyncManager
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import kr.or.lightsalt.kotloid.installPackage
 import kr.or.lightsalt.kotloid.startActivity
 
@@ -19,12 +17,13 @@ open class BaseWebViewClient : WebViewClient() {
 		val context = view.context
 		val uri = Uri.parse(url)
 		when (uri.scheme) {
+			"file" -> false
 			"http", "https" -> {
-				view.loadUrl(if (url.startsWith(
+				if (url.startsWith(
 						"https://m.facebook.com/v2.0/dialog/oauth?redirect")) {
-					UrlQuerySanitizer(url).getValue("redirect")
-				} else url)
-				true
+					view.loadUrl(UrlQuerySanitizer(url).getValue("redirect"))
+					true
+				}else false
 			}
 			"intent" -> context.run {
 				val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
@@ -70,6 +69,8 @@ open class BaseWebViewClient : WebViewClient() {
 	override fun onPageFinished(view: WebView, url: String) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			CookieSyncManager.getInstance().sync()
+		} else {
+			CookieManager.getInstance().flush()
 		}
 	}
 }

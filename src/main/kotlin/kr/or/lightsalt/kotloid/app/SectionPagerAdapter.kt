@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.SparseArray
 import android.view.ViewGroup
 import java.lang.ref.WeakReference
+import kotlin.reflect.KClass
 
 class SectionPagerAdapter constructor(val activity: AppCompatActivity,
 			vararg private val tabs: Tab)
@@ -48,9 +49,9 @@ class SectionPagerAdapter constructor(val activity: AppCompatActivity,
 		@Suppress("UNCHECKED_CAST")
 		fun <T : Fragment> getFragment(position: Int): T? = fragments.get(position)?.get() as T?
 
-		class Tab constructor(fragment: Class<out Fragment>, var title: String,
+		class Tab constructor(fragment: KClass<out Fragment>, var title: String,
 				var icon: Int? = null) {
-			val fragment = fragment.name!!
+			val fragment = fragment.java.name!!
 			var visible = true
 		}
 	}

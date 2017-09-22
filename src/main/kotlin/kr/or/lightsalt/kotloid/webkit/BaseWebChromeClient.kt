@@ -1,10 +1,9 @@
 package kr.or.lightsalt.kotloid.webkit
 
 import android.app.Activity
-import android.webkit.WebChromeClient
-import android.webkit.WebView
+import android.webkit.*
 import android.widget.ProgressBar
-import kr.or.lightsalt.kotloid.activity
+import kr.or.lightsalt.kotloid.*
 
 open class BaseWebChromeClient : WebChromeClient() {
 	var activity: Activity? = null

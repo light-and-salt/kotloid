@@ -1,15 +1,18 @@
 package kr.or.lightsalt.kotloid
 
-import android.content.Context
-import android.content.Intent
+import android.annotation.SuppressLint
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings.Secure
+import android.support.v7.app.AlertDialog
 import android.util.TypedValue
 import android.widget.Toast
 import kotlin.reflect.KClass
 
-val Context.androidId: String? get() = Secure.getString(contentResolver, Secure.ANDROID_ID)
+val Context.androidId: String?
+	@SuppressLint("HardwareIds")
+	get() = Secure.getString(contentResolver, Secure.ANDROID_ID)
 
 fun Context.dpToPixel(dp: Float) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 		dp, resources.displayMetrics)
@@ -36,6 +39,10 @@ fun Context.pointsToPixel(points: Float) = TypedValue.applyDimension(TypedValue.
 
 fun Context.scaledPixel(value: Float) = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
 		value, resources.displayMetrics)
+
+fun Context.showAlertDialog(builder: AlertDialog.Builder.() -> Unit) {
+	AlertDialog.Builder(this).apply(builder).show()
+}
 
 fun Context.showToast(text: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
 	Toast.makeText(this, text, duration).show()

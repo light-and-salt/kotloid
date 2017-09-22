@@ -12,7 +12,7 @@ fun Any.loge(msg: String) = Log.e(javaClass.simpleName, msg)
 fun Any.loge(e: Throwable, msg: String = e.localizedMessage) = Log.e(javaClass.simpleName, msg, e)
 fun Any.logi(msg: String) = Log.i(javaClass.simpleName, msg)
 fun Any.logi(e: Throwable, msg: String = e.localizedMessage) = Log.i(javaClass.simpleName, msg, e)
-fun <T> T?.logi(message: T?.(T?) -> String): T? {
+fun <T> T?.logi(message: T?.(T?) -> String = {it.toString()}): T? {
 	message.logi(this.message(this))
 	return this
 }
@@ -26,10 +26,5 @@ val ByteArray.base64 get() = Base64.encodeToString(this,
 		URL_SAFE or NO_CLOSE or NO_PADDING or NO_WRAP)!!
 
 val Long.base64 get() = BigInteger.valueOf(this).toByteArray().base64
-
-val String?.uuid: UUID get() {
-	return if (isNullOrBlank()) UUID.randomUUID()
-	else UUID.nameUUIDFromBytes(this!!.toByteArray())
-}
 
 val UUID.base64 get() = mostSignificantBits.base64 + leastSignificantBits.base64

@@ -7,8 +7,6 @@ import android.view.View
 
 fun <T : Activity> View.activity() = context as T
 
-fun <T : View> View.find(id: Int): T? = findViewById(id) as T?
-
 var View.isGone: Boolean
 	get() = visibility == View.GONE
 	set(value) {
@@ -20,3 +18,9 @@ var View.isInVisible: Boolean
 	set(value) {
 		visibility = if (value) View.INVISIBLE else View.VISIBLE
 	}
+
+fun <T : View> T.postSelf(block: T.() -> Unit) {
+	this.post {
+		this.block()
+	}
+}

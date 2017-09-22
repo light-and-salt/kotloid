@@ -5,7 +5,7 @@ package kr.or.lightsalt.kotloid.webkit
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import android.webkit.WebSettings
+import android.webkit.*
 import android.widget.ProgressBar
 import im.delight.android.webview.AdvancedWebView
 
@@ -17,21 +17,37 @@ interface WebClient {
 	val webViewClient: BaseWebViewClient
 
 	@SuppressLint("SetJavaScriptEnabled")
-	fun init() = webView.run {
+	fun init() {
 		webChromeClient.progressBar = progressBar
-		setWebChromeClient(webChromeClient)
-		setWebViewClient(webViewClient)
-		settings.run {
-			databaseEnabled = true
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-				databasePath = context.getDir("database", Context.MODE_PRIVATE).path
+		webView.webChromeClient = webChromeClient
+		webView.webViewClient = webViewClient
+		webView.run {
+			settings.run {
+				databaseEnabled = true
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+					databasePath = context.getDir("database", Context.MODE_PRIVATE).path
+				}
+				domStorageEnabled = true
+				javaScriptEnabled = true
+				pluginState = WebSettings.PluginState.ON
 			}
-			domStorageEnabled = true
-			javaScriptEnabled = true
-			pluginState = WebSettings.PluginState.ON
+			loadUrl(this@WebClient.url)
 		}
-		loadUrl(this@WebClient.url)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+		}
 	}
+
+	fun addHttpHeaders(headers: Map<String, String>) {
+		for (h in headers) {
+			webView.addHttpHeader(h.key, h.value)
+		}
+	}
+
+	fun goBack() = if (webView.canGoBack()) {
+		webView.goBack()
+		true
+	} else false
 
 	companion object {
 		const val KEY_URL = "url"
