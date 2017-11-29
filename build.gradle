@@ -1,12 +1,22 @@
 buildscript {
-	ext.kotlin_version = project.KOTLIN_VERSION
+	try {
+		ext {
+			kotlin_ver = project.KOTLIN_VERSION
+			support_ver = project.ANDROID_SUPPORT_VERSION
+		}
+	} catch (Exception ignored) {
+		ext {
+			kotlin_ver = '+'
+			support_ver = '+'
+		}
+	}
 
 	repositories {
 		jcenter()
 	}
 	dependencies {
-		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-		classpath "com.github.dcendents:android-maven-plugin:1.2"
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_ver"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:2.0"
 		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3"
 	}
 }
@@ -66,19 +76,28 @@ artifacts {
 
 archivesBaseName = 'kotloid'
 group 'kr.or.lightsalt'
-version project.KOTLIB_VERSION
+try {
+	version project.KOTLIB_VERSION
+} catch (Exception ignored) {
+}
 
 repositories {
+	google()
+	jcenter()
 	maven { url "https://jitpack.io" }
 }
 
 dependencies {
-	implementation "$group:kotlib:$version"
-	implementation "com.android.support:design:$project.ANDROID_SUPPORT_VERSION"
-	implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-	testImplementation "junit:junit:4.12"
-	testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$project.KOTLIN_VERSION"
+	try {
+		api project(':kotlib')
+	} catch (UnknownProjectException ignored) {
+		api 'com.github.light-and-salt:kotlib:-SNAPSHOT'
+	}
+	api "com.android.support:design:$support_ver"
+	api 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
+	api "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_ver"
+	testApi "junit:junit:4.12"
+	testApi "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_ver"
 }
 
 Properties properties = new Properties()
