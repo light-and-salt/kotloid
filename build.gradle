@@ -1,19 +1,13 @@
 buildscript {
-	try {
-		ext {
-			kotlin_ver = project.KOTLIN_VERSION
-			support_ver = project.ANDROID_SUPPORT_VERSION
-		}
-	} catch (Exception ignored) {
-		ext {
-			kotlin_ver = '+'
-			support_ver = '+'
-		}
+	ext {
+		kotlin_ver = project.findProperty('KOTLIN_VERSION') ?: '+'
+		support_ver = project.findProperty('ANDROID_SUPPORT_VERSION') ?: '+'
 	}
 
 	repositories {
 		jcenter()
 	}
+
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_ver"
 		classpath "com.github.dcendents:android-maven-gradle-plugin:2.0"
@@ -76,15 +70,12 @@ artifacts {
 
 archivesBaseName = 'kotloid'
 group 'kr.or.lightsalt'
-try {
-	version project.KOTLIB_VERSION
-} catch (Exception ignored) {
-}
+version project.findProperty('KOTLIB_VERSION')
 
 repositories {
 	google()
 	jcenter()
-	maven { url "https://jitpack.io" }
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {

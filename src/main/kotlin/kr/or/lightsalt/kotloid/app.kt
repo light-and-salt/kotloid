@@ -18,5 +18,7 @@ fun <T : View> Fragment.lazyViewById(id: Int) = lazy { view!!.findViewById<T>(id
 fun Fragment.startActivity(action: String, url: String)
 		= startActivity(Intent(action, Uri.parse(url)))
 
+fun <T : Fragment> Fragment.getParent() = parentFragment as T
+
 fun FragmentManager.commitTransaction(transaction: FragmentTransaction.() -> Unit)
 		= beginTransaction().apply(transaction).commit()

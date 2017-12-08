@@ -4,7 +4,7 @@ package kr.or.lightsalt.kotloid.webkit
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
+import android.os.*
 import android.webkit.*
 import android.widget.ProgressBar
 import im.delight.android.webview.AdvancedWebView
@@ -17,7 +17,7 @@ interface WebClient {
 	val webViewClient: BaseWebViewClient
 
 	@SuppressLint("SetJavaScriptEnabled")
-	fun init() {
+	fun init(savedInstanceState: Bundle?) {
 		webChromeClient.progressBar = progressBar
 		webView.webChromeClient = webChromeClient
 		webView.webViewClient = webViewClient
@@ -31,7 +31,11 @@ interface WebClient {
 				javaScriptEnabled = true
 				pluginState = WebSettings.PluginState.ON
 			}
-			loadUrl(this@WebClient.url)
+			if (savedInstanceState != null) {
+				restoreState(savedInstanceState)
+			} else {
+				loadUrl(this@WebClient.url)
+			}
 		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)

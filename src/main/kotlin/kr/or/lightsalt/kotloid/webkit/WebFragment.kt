@@ -39,6 +39,7 @@ open class WebFragment : Fragment(), WebClient {
 			CookieSyncManager.getInstance().stopSync()
 		}
 	}
+
 	override fun onResume() {
 		super.onResume()
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -46,7 +47,12 @@ open class WebFragment : Fragment(), WebClient {
 		}
 	}
 
-	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) = init()
+	override fun onSaveInstanceState(outState: Bundle?) {
+		super.onSaveInstanceState(outState)
+		webView.saveState(outState)
+	}
+
+	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) = init(savedInstanceState)
 
 	companion object {
 		const val KEY_URL = WebClient.KEY_URL

@@ -31,7 +31,7 @@ open class WebActivity : AppCompatActivity(), WebClient {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.web)
-		init()
+		init(savedInstanceState)
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			CookieSyncManager.createInstance(this)
 		}
