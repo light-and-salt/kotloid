@@ -47,12 +47,12 @@ open class WebFragment : Fragment(), WebClient {
 		}
 	}
 
-	override fun onSaveInstanceState(outState: Bundle?) {
+	override fun onSaveInstanceState(outState: Bundle) {
 		super.onSaveInstanceState(outState)
 		webView.saveState(outState)
 	}
 
-	override fun onViewCreated(view: View?, savedInstanceState: Bundle?) = init(savedInstanceState)
+	override fun onViewCreated(view: View, savedInstanceState: Bundle?) = init(savedInstanceState)
 
 	companion object {
 		const val KEY_URL = WebClient.KEY_URL

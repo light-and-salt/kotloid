@@ -51,6 +51,11 @@ open class WebActivity : AppCompatActivity(), WebClient {
 		}
 	}
 
+	override fun onSaveInstanceState(outState: Bundle) {
+		super.onSaveInstanceState(outState)
+		webView.saveState(outState)
+	}
+
 	companion object {
 		const val EXTRA_URL = WebClient.KEY_URL
 	}

@@ -9,7 +9,7 @@ import java.lang.ref.WeakReference
 import kotlin.reflect.KClass
 
 class SectionPagerAdapter constructor(val context: Context, fragmentManager: FragmentManager,
-		vararg private val tabs: Tab) : FragmentPagerAdapter(fragmentManager) {
+		private vararg val tabs: Tab) : FragmentPagerAdapter(fragmentManager) {
 	private val fragments = SparseArray<WeakReference<Fragment>>()
 
 	constructor(activity: AppCompatActivity, vararg tabs: Tab) :
@@ -19,10 +19,10 @@ class SectionPagerAdapter constructor(val context: Context, fragmentManager: Fra
 
 	override fun getItemId(position: Int) = getTab(position).fragment.hashCode().toLong()
 
-	override fun getItemPosition(item: Any?): Int {
+	override fun getItemPosition(item: Any): Int {
 		var count = 0
 		for (tab in tabs) {
-			if (item?.javaClass?.name == tab.fragment) {
+			if (item.javaClass.name == tab.fragment) {
 				return if (tab.visible) count else POSITION_NONE
 			}
 			if (tab.visible) count++
@@ -42,7 +42,7 @@ class SectionPagerAdapter constructor(val context: Context, fragmentManager: Fra
 		return fragment
 	}
 
-	override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any) {
+	override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
 		fragments.remove(position)
 		super.destroyItem(container, position, `object`)
 	}
