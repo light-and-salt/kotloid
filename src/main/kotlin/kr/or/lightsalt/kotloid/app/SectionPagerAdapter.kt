@@ -1,10 +1,10 @@
 package kr.or.lightsalt.kotloid.app
 
 import android.content.Context
-import android.support.v4.app.*
-import android.support.v7.app.AppCompatActivity
 import android.util.SparseArray
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.*
 import java.lang.ref.WeakReference
 import kotlin.reflect.KClass
 
@@ -52,7 +52,7 @@ class SectionPagerAdapter constructor(val context: Context, fragmentManager: Fra
 
 	open class Tab constructor(fragment: KClass<out Fragment>, var title: String? = null,
 			var icon: Int? = null) {
-		val fragment = fragment.java.name!!
+		val fragment: String = fragment.java.name
 		var visible = true
 
 		open fun instantiate(context: Context, fname: String) =

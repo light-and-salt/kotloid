@@ -11,7 +11,7 @@ buildscript {
 
 	dependencies {
 		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_ver"
-		classpath "com.github.dcendents:android-maven-gradle-plugin:2.0"
+		classpath "com.github.dcendents:android-maven-gradle-plugin:2.1"
 		classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.3"
 	}
 }
@@ -22,13 +22,13 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-	compileSdkVersion 27
-	buildToolsVersion '27.0.3'
+	compileSdkVersion 28
+	buildToolsVersion '29.0.2'
 	useLibrary 'org.apache.http.legacy'
 
 	defaultConfig {
 		minSdkVersion 14
-		targetSdkVersion 27
+		targetSdkVersion 28
 	}
 
 	buildTypes {
@@ -82,14 +82,14 @@ repositories {
 dependencies {
 	try {
 		api project(':kotlib')
-	} catch (UnknownProjectException ignored) {
+	} catch (Exception ignored) {
 		api 'com.github.light-and-salt:kotlib:-SNAPSHOT'
 	}
 	api "com.android.support:design:$support_ver"
 	api 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
 	api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_ver"
-	testApi "junit:junit:4.12"
-	testApi "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_ver"
+	testImplementation "junit:junit:4.12"
+	testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_ver"
 }
 
 Properties properties = new Properties()

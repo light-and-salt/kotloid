@@ -4,10 +4,10 @@ package kr.or.lightsalt.kotloid.webkit
 
 import android.content.*
 import android.os.*
-import android.support.v4.app.Fragment
 import android.view.*
 import android.webkit.CookieSyncManager
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import im.delight.android.webview.AdvancedWebView
 import kr.or.lightsalt.kotloid.*
 

@@ -4,9 +4,9 @@ package kr.or.lightsalt.kotloid.webkit
 
 import android.content.Intent
 import android.os.*
-import android.support.v7.app.AppCompatActivity
 import android.webkit.CookieSyncManager
 import android.widget.ProgressBar
+import androidx.appcompat.app.*
 import im.delight.android.webview.AdvancedWebView
 import kr.or.lightsalt.kotloid.R
 

@@ -31,7 +31,7 @@ open class BaseWebViewClient : WebViewClient() {
 					startActivity(intent)
 					return@run true
 				}
-				val pkg = intent.`package`
+				val pkg = intent.`package`!!
 				if (packageManager.getLaunchIntentForPackage(pkg) != null) {
 					startActivity(intent)
 				} else {

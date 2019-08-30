@@ -5,9 +5,9 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings.Secure
-import android.support.v7.app.AlertDialog
 import android.util.TypedValue
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import kotlin.reflect.KClass
 
 
