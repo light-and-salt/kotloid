@@ -23,7 +23,7 @@ open class WebFragment : Fragment(), WebClient {
 		webView.onActivityResult(requestCode, resultCode, data)
 	}
 
-	override fun onAttach(context: Context?) {
+	override fun onAttach(context: Context) {
 		super.onAttach(context)
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 			CookieSyncManager.createInstance(context)
