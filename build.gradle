@@ -19,7 +19,7 @@ apply plugin: 'com.jfrog.bintray'
 
 android {
 	compileSdkVersion 29
-	buildToolsVersion '29.0.2'
+	buildToolsVersion '29.0.3'
 	useLibrary 'org.apache.http.legacy'
 
 	defaultConfig {
@@ -86,8 +86,10 @@ dependencies {
 		api 'com.github.light-and-salt:kotlib:-SNAPSHOT'
 	}
 	api 'androidx.appcompat:appcompat:1.1.0'
+	api 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+	api 'androidx.navigation:navigation-ui-ktx:2.2.1'
 	api 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
-	api 'com.google.android.material:material:1.0.0'
+	api 'com.google.android.material:material:1.1.0'
 	api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_ver"
 	testImplementation "junit:junit:4.12"
 	testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_ver"
