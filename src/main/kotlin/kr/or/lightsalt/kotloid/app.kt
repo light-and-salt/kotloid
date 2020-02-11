@@ -17,7 +17,7 @@ fun Activity.showToastOnUi(text: CharSequence, duration: Int = Toast.LENGTH_SHOR
 fun AppCompatActivity.instantiateFragment(className: String)
 	= supportFragmentManager.fragmentFactory.instantiate(classLoader, className)
 
-fun <T : View> Fragment.lazyViewById(id: Int) = lazy { view!!.findViewById<T>(id) }
+fun <T : View> Fragment.lazyViewById(id: Int) = weakRef { view!!.findViewById<T>(id) }
 
 fun Fragment.startActivity(action: String, url: String)
 		= startActivity(Intent(action, Uri.parse(url)))

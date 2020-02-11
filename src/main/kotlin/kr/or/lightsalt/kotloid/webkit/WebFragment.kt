@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION", "HasPlatformType", "unused")
 
 package kr.or.lightsalt.kotloid.webkit
 
@@ -12,10 +12,10 @@ import im.delight.android.webview.AdvancedWebView
 import kr.or.lightsalt.kotloid.*
 
 open class WebFragment : Fragment(), WebClient {
-	override val progressBar: ProgressBar by lazyViewById(android.R.id.progress)
+	override var progressBar by lazyViewById<ProgressBar>(android.R.id.progress)
 	override val url: String? by lazy { arguments?.getString(KEY_URL) }
 	override val webChromeClient by lazy { BaseWebChromeClient() }
-	override val webView: AdvancedWebView by lazyViewById(R.id.webView)
+	override var webView by lazyViewById<AdvancedWebView>(R.id.webView)
 	override val webViewClient by lazy { BaseWebViewClient() }
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -32,6 +32,12 @@ open class WebFragment : Fragment(), WebClient {
 
 	override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
 			savedInstanceState: Bundle?) = inflater.inflate(R.layout.web, container, false)!!
+
+	override fun onDestroyView() {
+		super.onDestroyView()
+		progressBar = null
+		webView = null
+	}
 
 	override fun onPause() {
 		super.onPause()
