@@ -26,7 +26,3 @@ fun <T : Fragment> Fragment.getParent() = parentFragment as T
 fun FragmentActivity.instantiateFragment(className: String): Fragment {
     return supportFragmentManager.fragmentFactory.instantiate(classLoader, className)
 }
-
-fun FragmentManager.commitTransaction(transaction: FragmentTransaction.() -> Unit) {
-    beginTransaction().apply(transaction).commit()
-}
