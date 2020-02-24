@@ -7,7 +7,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import kr.or.lightsalt.kotloid.R
 import kr.or.lightsalt.kotloid.lazyViewById
-import kotlin.reflect.KClass
 
 @Suppress("HasPlatformType", "MemberVisibilityCanBePrivate", "unused")
 open class TabsFragment<T>(contentLayoutId: Int = R.layout.fragment_tabs) : Fragment(contentLayoutId)
@@ -38,12 +37,11 @@ open class TabsFragment<T>(contentLayoutId: Int = R.layout.fragment_tabs) : Frag
     )
 
     companion object {
-        fun tabPage(
-            fragment: KClass<out Fragment>,
+        inline fun <reified T : Fragment> tabPage(
             title: CharSequence? = null,
             icon: Int? = null,
             args: Bundle? = null
-        ) = Page.FragmentPage<Tab>(fragment, args).apply {
+        ) = Page.FragmentPage<Tab>(T::class, args).apply {
             data = Tab(icon)
             this.title = title
         }
